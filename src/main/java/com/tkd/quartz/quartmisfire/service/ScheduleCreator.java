@@ -2,7 +2,6 @@ package com.tkd.quartz.quartmisfire.service;
 
 import org.quartz.*;
 import org.quartz.impl.JobDetailImpl;
-import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +9,11 @@ import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+
+/**
+ * This is just a dummy class which will create a job after all the processing done by spring
+ * This can be dynamic. Where you want to create Trigger on the way by accepting the data from some other service(application).
+ */
 
 @Service
 public class ScheduleCreator {
@@ -36,6 +40,7 @@ public class ScheduleCreator {
             e.printStackTrace();
         }
     }
+
     @PostConstruct
     public void create() throws SchedulerException {
 
@@ -44,7 +49,6 @@ public class ScheduleCreator {
                 .withIdentity("myJob", "myGroup")
                 .build();
 
-        // create the trigger and define its schedule to run every 3 seconds
         Trigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity("myTrigger", "myGroup")
                 .startAt(Date.from(LocalDateTime.now().plusMinutes(2).atZone(ZoneId.systemDefault()).toInstant()))

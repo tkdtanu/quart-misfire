@@ -1,5 +1,6 @@
 package com.tkd.quartz.quartmisfire.config;
 
+import com.tkd.quartz.quartmisfire.component.SchedulerBeanJobFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -26,6 +27,9 @@ public class SchedulerConfig {
         factory.setOverwriteExistingJobs(true);
         factory.setDataSource(dataSource);
         factory.setQuartzProperties(quartzProperties());
+        SchedulerBeanJobFactory jobFactory = new SchedulerBeanJobFactory();
+        jobFactory.setApplicationContext(applicationContext);
+        factory.setJobFactory(jobFactory);
 
         return factory;
     }
